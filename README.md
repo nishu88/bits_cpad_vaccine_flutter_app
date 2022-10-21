@@ -1,6 +1,8 @@
 # bits_cpad_vaccine_flutter_app
 bits_cpad_vaccine_flutter_app
 
+https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_1.20.4-stable.zip
+
 `Change Directory`
 ```
 cd backend

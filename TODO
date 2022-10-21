@@ -1,0 +1,29 @@
+CREATE MORE ENDPOINTS IN NODEJS
+
+STUDENT table
+
+POST /add_student
+studentID <str>, student_name <str>, coordinator_email <str> 
+* on adding student, update vaccine table saying vaccine_status = False and N/A
+
+DELETE /delete_student
+studentID <str>
+
+GET /generate_report
+Display all students under coordinator
+
+
+
+VACCINE table
+
+studentID <str>,    vaccinated status,   date of vaccination,   name of vaccine.
+
+
+VACCINATION DRIVE table
+
+GET /future_vac_drives
+date, number of vaccines available
+
+POST /reg_new_vac_drive
+
+date, number of vaccines available , name of vaccine

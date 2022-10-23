@@ -30,7 +30,7 @@ studentID <str>,    vaccinated status,   date of vaccination,   name of vaccine.
 VACCINATION DRIVE table
 
 GET /future_vac_drives
-date, number of vaccines available
+date, number of vaccines available  , name of vaccine
 
 POST /reg_new_vac_drive
 

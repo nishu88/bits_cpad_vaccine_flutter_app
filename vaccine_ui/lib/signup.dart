@@ -28,7 +28,7 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   Future save() async {
-    var res = await http.post("http://localhost:8080/signup",
+    var res = await http.post("http://10.0.2.2:8080/signup",
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },

@@ -1,3 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text("Dashboard",
+            style: GoogleFonts.pacifico(
+                fontWeight: FontWeight.bold, fontSize: 50, color: Colors.blue)),
+      ),
+    );
+  }
+}
+
+// class Dashboard extends StatefulWidget {
+//   Dashboard({Key key}) : super(key: key);
+//
+//   @override
+//   _DashboardState createState() => _DashboardState();
+// }
+//
+// class _DashboardState extends State<Dashboard> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Text("Dashboard",
+//             style: GoogleFonts.pacifico(
+//                 fontWeight: FontWeight.bold, fontSize: 50, color: Colors.blue)),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -5,9 +62,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:vaccine_ui/signin.dart';
-import 'package:vaccine_ui/add_student.dart';
-import 'package:vaccine_ui/add_vac_drive.dart';
-import 'package:vaccine_ui/get_all_student.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key? key}) : super(key: key);
@@ -117,7 +171,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(50, 10, 50, 0),
                             child: CircularPercentIndicator(
-                              percent: 10 / 12,
+                              percent: 10/12,
                               radius: 60,
                               lineWidth: 24,
                               animation: true,
@@ -150,12 +204,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(50, 10, 10, 0),
                             child: CircularPercentIndicator(
-                              percent: 2 / 12,
+                              percent: 2/12,
                               radius: 60,
                               lineWidth: 24,
                               animation: true,
-                              progressColor: Color(0xFFEB0B0B),
-                              //FlutterFlowTheme.of(context).primaryColor,
+                              progressColor:Color(0xFFEB0B0B),
+                                 //FlutterFlowTheme.of(context).primaryColor,
                               backgroundColor: Color(0xFFF1F4F8),
                               center: Text(
                                 '2',
@@ -171,13 +225,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                           SelectionArea(
                               child: Text(
-                            'NOT Vaccinated',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFFEB0B0B),
-                                    ),
-                          )),
+                                'NOT Vaccinated',
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFFEB0B0B),
+                                ),
+                              )),
                         ],
                       ),
                     ],
@@ -188,10 +241,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: FFButtonWidget(
                       onPressed: () {
                         print('Button pressed ...');
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => JsonParseDemo()));
                       },
                       text: 'Get all Students',
                       options: FFButtonOptions(
@@ -215,10 +264,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   FFButtonWidget(
                     onPressed: () {
                       print('Button pressed ...');
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => AddStudent()));
                     },
                     text: 'Add Student',
                     options: FFButtonOptions(
@@ -263,10 +308,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   FFButtonWidget(
                     onPressed: () {
                       print('Button pressed ...');
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => AddVacDrive()));
                     },
                     text: 'Add a new Vaccine Drive',
                     options: FFButtonOptions(

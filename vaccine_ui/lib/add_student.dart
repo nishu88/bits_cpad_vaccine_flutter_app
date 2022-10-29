@@ -6,62 +6,42 @@ import 'package:vaccine_ui/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class Signin extends StatefulWidget {
-  const Signin({super.key});
+class AddStudent extends StatefulWidget {
+  const AddStudent({super.key});
 
   @override
-  State<Signin> createState() => _SigninState();
+  State<AddStudent> createState() => _AddStudentState();
 }
 
-class _SigninState extends State<Signin> {
+class _AddStudentState extends State<AddStudent> {
   final _formKey = GlobalKey<FormState>();
 
-  Future save() async {
-    var res = await http.post("http://10.0.2.2:8080/signin",
-        headers: <String, String>{
-          'Context-Type': 'application/json;charSet=UTF-8'
-        },
-        body: <String, String>{
-          'email': user.email,
-          'password': user.password
-        });
-    // if(re.)
-    // if (value.toString().isEmpty)
-    print("-------------");
-    print(user.email);
-    print(user.password);
-    print("-------------");
+  // Future save() async {
+  //   var res = await http.post("http://10.0.2.2:8080/add_student",
+  //       headers: <String, String>{
+  //         'Context-Type': 'application/json;charSet=UTF-8'
+  //       },
+  //       body: <String, String>{
+  //         'email': user.email,
+  //         'password': user.password
+  //       });
+  //   // if(re.)
+  //   // if (value.toString().isEmpty)
+  //   print("-------------");
+  //   print(user.email);
+  //   print(user.password);
+  //   print("-------------");
 
-    print(res.body);
+  //   print(res.body);
 
-    if (res.body != "null") {
-      Navigator.push(context,
-          new MaterialPageRoute(builder: (context) => HomePageWidget()));
-      return null;
-    }
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('WRONG LOGIN, please signup'),
-        action: SnackBarAction(
-            label: 'SIGNUP',
-            onPressed: () {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => Signup()));
-            }),
-      ),
-    );
+  //   if (res.body != "null") {
+  //     Navigator.push(context,
+  //         new MaterialPageRoute(builder: (context) => HomePageWidget()));
+  //     return null;
+  //   }
+// }
 
-    // onTap: () {
-    //   Navigator.push(
-    //       context,
-    //       new MaterialPageRoute(
-    //           builder: (context) => Signup()));
-    // }
-    // return "WRONG LOGIN, please signup";
-  }
-
-  User user = User('', '');
+  // Student student = Student('', '');
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +68,11 @@ class _SigninState extends State<Signin> {
                       height: 150,
                     ),
                     Text(
-                      "Signin",
+                      "Add New Student",
                       style: GoogleFonts.pacifico(
                           fontWeight: FontWeight.bold,
-                          fontSize: 50,
-                          color: Colors.blue),
+                          fontSize: 40,
+                          color: Colors.purple),
                     ),
                     SizedBox(
                       height: 25,
@@ -100,20 +80,10 @@ class _SigninState extends State<Signin> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller: TextEditingController(text: user.password),
+                        controller:
+                            TextEditingController(text: "user.password"),
                         onChanged: (value) {
-                          user.email = value;
-                        },
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Enter something';
-                          } else if (RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value.toString())) {
-                            return null;
-                          } else {
-                            return 'Enter valid email';
-                          }
+                          // user.email = value;
                         },
                         decoration: InputDecoration(
                             icon: Icon(
@@ -138,9 +108,10 @@ class _SigninState extends State<Signin> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller: TextEditingController(text: user.password),
+                        controller:
+                            TextEditingController(text: "user.password"),
                         onChanged: (value) {
-                          user.password = value;
+                          // user.password = value;
                         },
                         validator: (value) {
                           if (value.toString().isEmpty) {
@@ -177,52 +148,25 @@ class _SigninState extends State<Signin> {
                         child: TextButton(
                             style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all(Colors.blue)),
+                                    MaterialStateProperty.all(Colors.purple)),
                             // color: Colors.blue,
                             // shape: RoundedRectangleBorder(
                             //     borderRadius: BorderRadius.circular(16.0)),
                             onPressed: () {
                               print(_formKey.currentState);
                               if (_formKey.currentState!.validate()) {
-                                save();
+                                // save();
                               } else {
                                 print("not ok");
                               }
                             },
                             child: Text(
-                              "Signin",
+                              "Add/Register New Student",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             )),
                       ),
                     ),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(95, 20, 0, 0),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Not have Account ? ",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => Signup()));
-                              },
-                              child: Text(
-                                "Signup",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ))
                   ],
                 ),
               ),
@@ -231,26 +175,3 @@ class _SigninState extends State<Signin> {
         ));
   }
 }
-
-// class Signin extends StatefulWidget {
-//   Signin({Key key}) : super(key: key);
-
-//   @override
-//   _SigninState createState() => _SigninState();
-// }
-
-// class _SigninState extends State<Signin> {
-//   final _formKey = GlobalKey<FormState>();
-//   Future save() async {
-//     var res = await http.post("http://localhost:8080/signin",
-//         headers: <String, String>{
-//           'Context-Type': 'application/json;charSet=UTF-8'
-//         },
-//         body: <String, String>{
-//           'email': user.email,
-//           'password': user.password
-//         });
-//     print(res.body);
-//     Navigator.push(
-//         context, new MaterialPageRoute(builder: (context) => Dashboard()));
-//   }

@@ -45,7 +45,7 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             Positioned(
@@ -87,7 +87,7 @@ class _SignupState extends State<Signup> {
                           if (value.toString().isEmpty) {
                             return 'Enter something';
                           } else if (RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(value.toString())) {
                             return null;
                           } else {
@@ -153,6 +153,9 @@ class _SignupState extends State<Signup> {
                         height: 50,
                         width: 400,
                         child: TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.red)),
                             // color: Colors.blue,
                             // shape: RoundedRectangleBorder(
                             //     borderRadius: BorderRadius.circular(16.0)),
@@ -165,7 +168,8 @@ class _SignupState extends State<Signup> {
                             },
                             child: Text(
                               "Signup",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             )),
                       ),
                     ),
@@ -177,7 +181,8 @@ class _SignupState extends State<Signup> {
                             Text(
                               "Already have Account ? ",
                               style: TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.bold),
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                             InkWell(
                               onTap: () {

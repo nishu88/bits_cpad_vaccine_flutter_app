@@ -47,6 +47,9 @@ class _AddStudentState extends State<AddStudent> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text('Back'),
+        ),
         body: Stack(
           children: [
             Positioned(

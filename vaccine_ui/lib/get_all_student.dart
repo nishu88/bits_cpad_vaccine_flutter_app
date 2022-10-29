@@ -20,7 +20,6 @@ class _JsonParseDemoState extends State<JsonParseDemo> {
     Services.getUsers().then((users) {
       setState(() {
         print(users);
-        print("yo");
         _users = users;
         _loading = false;
       });

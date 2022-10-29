@@ -11,10 +11,8 @@ class Services {
         print(response.body);
         final List<Users> users = usersFromJson(response.body);
         print(users);
-        print("dasdasd");
         return users;
       } else {
-        print("gg");
         return <Users>[];
       }
     } catch (e) {

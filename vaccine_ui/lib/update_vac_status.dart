@@ -8,15 +8,15 @@ import 'package:vaccine_ui/vaccine.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class AddStudent extends StatefulWidget {
+class UpdateVacStatus extends StatefulWidget {
   String coordinator_email;
-  AddStudent({required this.coordinator_email});
+  UpdateVacStatus({required this.coordinator_email});
 
   @override
-  State<AddStudent> createState() => _AddStudentState();
+  State<UpdateVacStatus> createState() => _UpdateVacStatusState();
 }
 
-class _AddStudentState extends State<AddStudent> {
+class _UpdateVacStatusState extends State<UpdateVacStatus> {
   final _formKey = GlobalKey<FormState>();
 
   Future save() async {
@@ -24,15 +24,17 @@ class _AddStudentState extends State<AddStudent> {
         .post("http://10.0.2.2:8080/vaccine/update", headers: <String, String>{
       'Context-Type': 'application/json;charSet=UTF-8'
     }, body: <String, String>{
-      'student_id': student.student_id,
-      'student_name': student.student_name,
+      'student_id': vaccine.student_id,
+      'date': "30/10/2022",
+      'vaccination_status': "true",
+      'vac_type': vaccine.vac_type,
       'coordinator_email': widget.coordinator_email
     });
     // if(re.)
     // if (value.toString().isEmpty)
     print("-------------");
-    print(student.student_id);
-    print(student.student_name);
+    print(vaccine.student_id);
+    print(vaccine.vac_type);
     print(widget.coordinator_email);
     print("-------------");
 
@@ -59,7 +61,7 @@ class _AddStudentState extends State<AddStudent> {
     }
   }
 
-  Student student = Student('', '', '');
+  Vaccine vaccine = Vaccine('', '', '', '');
   @override
   Widget build(BuildContext context) {
     print(widget.coordinator_email);
@@ -89,11 +91,11 @@ class _AddStudentState extends State<AddStudent> {
                       height: 150,
                     ),
                     Text(
-                      "Add New Student",
+                      "Update Vac Status",
                       style: GoogleFonts.pacifico(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
-                          color: Colors.purple),
+                          color: Colors.orange),
                     ),
                     SizedBox(
                       height: 25,
@@ -102,10 +104,9 @@ class _AddStudentState extends State<AddStudent> {
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
                         controller:
-                            TextEditingController(text: student.student_id),
+                            TextEditingController(text: vaccine.student_id),
                         onChanged: (value) {
-                          student.student_id = value;
-                          student.coordinator_email = widget.coordinator_email;
+                          vaccine.student_id = value;
                         },
                         decoration: InputDecoration(
                             icon: Icon(
@@ -131,9 +132,9 @@ class _AddStudentState extends State<AddStudent> {
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
                         controller:
-                            TextEditingController(text: student.student_name),
+                            TextEditingController(text: vaccine.vac_type),
                         onChanged: (value) {
-                          student.student_name = value;
+                          vaccine.vac_type = value;
                         },
                         validator: (value) {
                           if (value.toString().isEmpty) {
@@ -147,7 +148,7 @@ class _AddStudentState extends State<AddStudent> {
                               Icons.supervised_user_circle_outlined,
                               color: Colors.blue,
                             ),
-                            hintText: 'Enter Student name',
+                            hintText: 'Enter Vac name',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(color: Colors.blue)),
@@ -170,7 +171,7 @@ class _AddStudentState extends State<AddStudent> {
                         child: TextButton(
                             style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all(Colors.purple)),
+                                    MaterialStateProperty.all(Colors.orange)),
                             // color: Colors.blue,
                             // shape: RoundedRectangleBorder(
                             //     borderRadius: BorderRadius.circular(16.0)),
@@ -184,7 +185,7 @@ class _AddStudentState extends State<AddStudent> {
                               }
                             },
                             child: Text(
-                              "Add/Register New Student",
+                              "Update Vac Status for Student",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             )),

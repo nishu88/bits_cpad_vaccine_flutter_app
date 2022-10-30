@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:vaccine_ui/signup.dart';
 import 'package:vaccine_ui/dashboard.dart';
 import 'package:vaccine_ui/user.dart';
+import 'package:vaccine_ui/vac_drive.dart';
+import 'package:vaccine_ui/get_all_vac_drives.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,32 +18,34 @@ class AddVacDrive extends StatefulWidget {
 class _AddVacDriveState extends State<AddVacDrive> {
   final _formKey = GlobalKey<FormState>();
 
-  // Future save() async {
-  //   var res = await http.post("http://10.0.2.2:8080/add_vac_drive",
-  //       headers: <String, String>{
-  //         'Context-Type': 'application/json;charSet=UTF-8'
-  //       },
-  //       body: <String, String>{
-  //         'email': user.email,
-  //         'password': user.password
-  //       });
-  //   // if(re.)
-  //   // if (value.toString().isEmpty)
-  //   print("-------------");
-  //   print(user.email);
-  //   print(user.password);
-  //   print("-------------");
+  Future save() async {
+    var res = await http.post(
+        "http://10.0.2.2:8080/vaccine_drive/reg_new_vac_drive",
+        headers: <String, String>{
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'date': vac_drive.date,
+          'name': vac_drive.name,
+          'no_of_vaccine': vac_drive.no_of_vaccine,
+        });
+    // if(re.)
+    // if (value.toString().isEmpty)
+    print("-------------");
+    print(vac_drive.date);
+    print(vac_drive.name);
+    print("-------------");
 
-  //   print(res.body);
+    print(res.body);
 
-  //   if (res.body != "null") {
-  //     Navigator.push(context,
-  //         new MaterialPageRoute(builder: (context) => HomePageWidget()));
-  //     return null;
-  //   }
-// }
+    //   if (res.body != "null") {
+    //     Navigator.push(
+    //         context, new MaterialPageRoute(builder: (context) => GetVacDrives()));
+    //     return null;
+    //   }
+  }
 
-  // VacDrive vac_drive = VacDrive('', '');
+  Vaccine_Drive vac_drive = Vaccine_Drive('', '', '');
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +87,16 @@ class _AddVacDriveState extends State<AddVacDrive> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller:
-                            TextEditingController(text: "user.password"),
+                        controller: TextEditingController(text: vac_drive.date),
                         onChanged: (value) {
-                          // user.email = value;
+                          vac_drive.date = value;
                         },
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.email,
+                              Icons.date_range,
                               color: Colors.blue,
                             ),
-                            hintText: 'Enter Email',
+                            hintText: 'Enter Date of Vaccine Drive',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(color: Colors.blue)),
@@ -111,10 +114,9 @@ class _AddVacDriveState extends State<AddVacDrive> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller:
-                            TextEditingController(text: "user.password"),
+                        controller: TextEditingController(text: vac_drive.name),
                         onChanged: (value) {
-                          // user.password = value;
+                          vac_drive.name = value;
                         },
                         validator: (value) {
                           if (value.toString().isEmpty) {
@@ -122,13 +124,48 @@ class _AddVacDriveState extends State<AddVacDrive> {
                           }
                           return null;
                         },
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.vpn_key,
+                              Icons.supervised_user_circle_outlined,
                               color: Colors.blue,
                             ),
-                            hintText: 'Enter Password',
+                            hintText: 'Enter Name of Vaccine',
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide(color: Colors.blue)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.black)),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.red))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: TextEditingController(
+                            text: vac_drive.no_of_vaccine),
+                        onChanged: (value) {
+                          vac_drive.no_of_vaccine = value;
+                        },
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return 'Enter something';
+                          }
+                          return null;
+                        },
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.numbers,
+                              color: Colors.blue,
+                            ),
+                            hintText: 'Enter No. of Vaccines available',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(color: Colors.blue)),
@@ -158,7 +195,7 @@ class _AddVacDriveState extends State<AddVacDrive> {
                             onPressed: () {
                               print(_formKey.currentState);
                               if (_formKey.currentState!.validate()) {
-                                // save();
+                                save();
                               } else {
                                 print("not ok");
                               }

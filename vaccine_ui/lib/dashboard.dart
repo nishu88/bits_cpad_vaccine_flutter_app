@@ -8,6 +8,10 @@ import 'package:vaccine_ui/signin.dart';
 import 'package:vaccine_ui/add_student.dart';
 import 'package:vaccine_ui/add_vac_drive.dart';
 import 'package:vaccine_ui/get_all_student.dart';
+import 'package:vaccine_ui/update_vac_status.dart';
+import 'package:vaccine_ui/Services.dart';
+import 'package:vaccine_ui/Users.dart';
+import 'package:vaccine_ui/get_all_vac_drives.dart';
 
 class HomePageWidget extends StatefulWidget {
   String coordinator_email;
@@ -19,6 +23,34 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<Users> _users = <Users>[];
+  bool _loading = true;
+  int _users_len = 0;
+  int _vaccinated_count = 0;
+  @override
+  void initState() {
+    // super.reassemble();
+    super.initState();
+    _loading = true;
+    Services.getUsers(widget.coordinator_email).then((users) {
+      setState(() {
+        var vaccinated_count = 0;
+        for (final blah in users) {
+          if (blah.vaccinationStatus == "true") {
+            vaccinated_count += 1;
+          }
+        }
+        print(users.length);
+        print(vaccinated_count);
+        _users = users;
+        _loading = false;
+        _users_len = users.length;
+        _vaccinated_count = vaccinated_count;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.coordinator_email);
@@ -65,6 +97,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       builder: (context) => Signin()));
                             },
                           ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePageWidget(
+                                        coordinator_email:
+                                            widget.coordinator_email,
+                                      )), // this mymainpage is your page to refresh
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                          icon: const Icon(Icons.refresh),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
@@ -118,7 +164,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(50, 10, 50, 0),
                             child: CircularPercentIndicator(
-                              percent: 10 / 12,
+                              percent: _vaccinated_count / _users.length,
                               radius: 60,
                               lineWidth: 24,
                               animation: true,
@@ -126,7 +172,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   FlutterFlowTheme.of(context).primaryColor,
                               backgroundColor: Color(0xFFF1F4F8),
                               center: Text(
-                                '10',
+                                _vaccinated_count.toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -151,7 +197,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(50, 10, 10, 0),
                             child: CircularPercentIndicator(
-                              percent: 2 / 12,
+                              percent: (_users.length - _vaccinated_count) /
+                                  _users.length,
                               radius: 60,
                               lineWidth: 24,
                               animation: true,
@@ -159,7 +206,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               //FlutterFlowTheme.of(context).primaryColor,
                               backgroundColor: Color(0xFFF1F4F8),
                               center: Text(
-                                '2',
+                                (_users.length - _vaccinated_count).toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -218,7 +265,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => AddStudent(
+                              builder: (context) => UpdateVacStatus(
                                     coordinator_email: widget.coordinator_email,
                                   )));
                     },
@@ -248,7 +295,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
-                                builder: (context) => JsonParseDemo()));
+                                builder: (context) => JsonParseDemo(
+                                      coordinator_email:
+                                          widget.coordinator_email,
+                                    )));
                       },
                       text: 'Get Vaccination status',
                       options: FFButtonOptions(
@@ -298,6 +348,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   FFButtonWidget(
                     onPressed: () {
                       print('Get all Vaccine Drives Button pressed ...');
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => JsonParseDemo2()));
                     },
                     text: 'Get all Vaccine Drives',
                     options: FFButtonOptions(

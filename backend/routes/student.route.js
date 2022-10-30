@@ -28,9 +28,10 @@ router.post('/add',(req,res)=>{
                     }
                 const vaccine = Vaccine({
                     student_id:req.body.student_id,
-                    vaccination_status:false,
+                    vaccination_status:"false",
                     date:"N/A",
-                    vac_type:"N/A"
+                    vac_type:"N/A",
+                    coordinator_email:req.body.coordinator_email,
                 })
                 vaccine.save()               
                     

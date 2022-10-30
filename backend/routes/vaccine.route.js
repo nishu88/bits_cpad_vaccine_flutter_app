@@ -11,7 +11,9 @@ router.post('/update',(req,res)=>{
             student_id:req.body.student_id,
             vaccination_status:"true",
             date:req.body.date,
-            vac_type:req.body.vac_type
+            vac_type:req.body.vac_type,
+            coordinator_email:req.body.coordinator_email
+
         }}, {new: true},(err,student)=>{
 
         if(err){
@@ -26,6 +28,18 @@ router.post('/update',(req,res)=>{
             res.json(student)    
     })
     
+})
+
+router.get('/get_all_status',(req,res)=>{
+    console.log(req.query)
+    Vaccine.find(req.query,(err,user)=>{
+        if(err){
+            console.log(err)
+            res.json(err)
+        }else{
+            res.json(user)   
+        }
+    })
 })
 
 module.exports = router

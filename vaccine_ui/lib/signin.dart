@@ -94,11 +94,22 @@ class _SigninState extends State<Signin> {
                       height: 150,
                     ),
                     Text(
-                      "Signin",
+                      "Student Vaccine App",
                       style: GoogleFonts.pacifico(
                           fontWeight: FontWeight.bold,
-                          fontSize: 50,
+                          fontSize: 40,
                           color: Colors.blue),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+
+                          Text(
+                          "Signin",
+                          style: GoogleFonts.pacifico(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                          color: Colors.green),
                     ),
                     SizedBox(
                       height: 25,

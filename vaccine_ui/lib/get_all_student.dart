@@ -4,7 +4,9 @@ import 'package:vaccine_ui/Users.dart';
 
 class JsonParseDemo extends StatefulWidget {
   //
-  JsonParseDemo() : super();
+  String coordinator_email;
+  JsonParseDemo({required this.coordinator_email});
+
   @override
   _JsonParseDemoState createState() => _JsonParseDemoState();
 }
@@ -17,7 +19,7 @@ class _JsonParseDemoState extends State<JsonParseDemo> {
   void initState() {
     super.initState();
     _loading = true;
-    Services.getUsers().then((users) {
+    Services.getUsers(widget.coordinator_email).then((users) {
       setState(() {
         print(users);
         _users = users;
@@ -30,7 +32,8 @@ class _JsonParseDemoState extends State<JsonParseDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? 'Loading...' : 'All Users'),
+        title: Text(
+            _loading ? 'Loading...' : 'Vaccination Status of all Students'),
       ),
       body: Container(
         color: Colors.white,
@@ -39,8 +42,10 @@ class _JsonParseDemoState extends State<JsonParseDemo> {
           itemBuilder: (context, index) {
             Users user = _users[index];
             return ListTile(
-              title: Text(user.email),
-              subtitle: Text(user.password),
+              title: Text("Student ID: " + user.studentId),
+              subtitle: Text("Vac name: " + user.vacType),
+              leading: Icon(Icons.label),
+              trailing: Text("Date: " + user.date),
             );
           },
         ),

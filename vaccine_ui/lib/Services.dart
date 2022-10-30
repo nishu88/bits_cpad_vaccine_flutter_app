@@ -3,10 +3,11 @@ import 'package:vaccine_ui/Users.dart';
 
 class Services {
   //
-  static const String url = 'http://10.0.2.2:8080/get_all_users';
-  static Future<List<Users>> getUsers() async {
+  static const String url = 'http://10.0.2.2:8080/vaccine/get_all_status';
+  static Future<List<Users>> getUsers(String coordinator_email) async {
     try {
-      final response = await http.get(url);
+      final response =
+          await http.get(url + '?coordinator_email=' + coordinator_email);
       if (200 == response.statusCode) {
         print(response.body);
         final List<Users> users = usersFromJson(response.body);

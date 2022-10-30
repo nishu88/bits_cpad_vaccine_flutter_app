@@ -18,7 +18,7 @@ router.post('/add',(req,res)=>{
                 const vaccine = Vaccine({
                     student_id:req.body.student_id,
                     vaccination_status:true,
-                    Date:req.body.date,
+                    date:req.body.date,
                     name:req.body.name
                 })
                 vaccine.save()

@@ -5,7 +5,7 @@ const newSchema = new Schema({
     student_id:String,
     vaccination_status:Boolean,
     date:String,
-    name:String
+    vac_type:String
 })
 
 module.exports = mongoose.model('Vaccine',newSchema)

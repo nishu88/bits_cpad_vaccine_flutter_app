@@ -4,75 +4,70 @@ import 'package:vaccine_ui/signup.dart';
 import 'package:vaccine_ui/dashboard.dart';
 import 'package:vaccine_ui/user.dart';
 import 'package:vaccine_ui/student.dart';
+import 'package:vaccine_ui/vaccine.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-class Signin extends StatefulWidget {
-  const Signin({super.key});
+class AddStudent extends StatefulWidget {
+  String coordinator_email;
+  AddStudent({required this.coordinator_email});
 
   @override
-  State<Signin> createState() => _SigninState();
+  State<AddStudent> createState() => _AddStudentState();
 }
 
-class _SigninState extends State<Signin> {
+class _AddStudentState extends State<AddStudent> {
   final _formKey = GlobalKey<FormState>();
 
   Future save() async {
-    var res = await http.post("http://10.0.2.2:8080/signin",
-        headers: <String, String>{
-          'Context-Type': 'application/json;charSet=UTF-8'
-        },
-        body: <String, String>{
-          'email': user.email,
-          'password': user.password
-        });
+    var res = await http
+        .post("http://10.0.2.2:8080/vaccine/update", headers: <String, String>{
+      'Context-Type': 'application/json;charSet=UTF-8'
+    }, body: <String, String>{
+      'student_id': student.student_id,
+      'student_name': student.student_name,
+      'coordinator_email': widget.coordinator_email
+    });
     // if(re.)
     // if (value.toString().isEmpty)
     print("-------------");
-    print(user.email);
-    print(user.password);
+    print(student.student_id);
+    print(student.student_name);
+    print(widget.coordinator_email);
     print("-------------");
 
+    print(res.statusCode);
     print(res.body);
 
-    if (res.body != "null") {
-      Navigator.push(
-          context,
-          new MaterialPageRoute(
-            builder: (context) => HomePageWidget(
-              coordinator_email: user.email,
-            ),
-          ));
-      return null;
+    if (res.statusCode == 400) {
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(res.body),
+          action: SnackBarAction(label: 'Error', onPressed: () {}),
+        ),
+      );
     }
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('WRONG LOGIN, please signup'),
-        action: SnackBarAction(
-            label: 'SIGNUP',
-            onPressed: () {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => Signup()));
-            }),
-      ),
-    );
-
-    // onTap: () {
-    //   Navigator.push(
-    //       context,
-    //       new MaterialPageRoute(
-    //           builder: (context) => Signup()));
-    // }
-    // return "WRONG LOGIN, please signup";
+    if (res.statusCode == 200) {
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(res.body),
+          action: SnackBarAction(label: 'Success', onPressed: () {}),
+        ),
+      );
+    }
   }
 
-  User user = User('', '');
-
+  Student student = Student('', '', '');
   @override
   Widget build(BuildContext context) {
+    print(widget.coordinator_email);
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text('Back'),
+        ),
         body: Stack(
           children: [
             Positioned(
@@ -94,11 +89,11 @@ class _SigninState extends State<Signin> {
                       height: 150,
                     ),
                     Text(
-                      "Signin",
+                      "Add New Student",
                       style: GoogleFonts.pacifico(
                           fontWeight: FontWeight.bold,
-                          fontSize: 50,
-                          color: Colors.blue),
+                          fontSize: 40,
+                          color: Colors.purple),
                     ),
                     SizedBox(
                       height: 25,
@@ -106,27 +101,18 @@ class _SigninState extends State<Signin> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller: TextEditingController(text: user.password),
+                        controller:
+                            TextEditingController(text: student.student_id),
                         onChanged: (value) {
-                          user.email = value;
-                        },
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Enter something';
-                          } else if (RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value.toString())) {
-                            return null;
-                          } else {
-                            return 'Enter valid email';
-                          }
+                          student.student_id = value;
+                          student.coordinator_email = widget.coordinator_email;
                         },
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.email,
+                              Icons.info_rounded,
                               color: Colors.blue,
                             ),
-                            hintText: 'Enter Email',
+                            hintText: 'Enter Student ID',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(color: Colors.blue)),
@@ -144,9 +130,10 @@ class _SigninState extends State<Signin> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: TextFormField(
-                        controller: TextEditingController(text: user.password),
+                        controller:
+                            TextEditingController(text: student.student_name),
                         onChanged: (value) {
-                          user.password = value;
+                          student.student_name = value;
                         },
                         validator: (value) {
                           if (value.toString().isEmpty) {
@@ -154,13 +141,13 @@ class _SigninState extends State<Signin> {
                           }
                           return null;
                         },
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.vpn_key,
+                              Icons.supervised_user_circle_outlined,
                               color: Colors.blue,
                             ),
-                            hintText: 'Enter Password',
+                            hintText: 'Enter Student name',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(color: Colors.blue)),
@@ -183,12 +170,13 @@ class _SigninState extends State<Signin> {
                         child: TextButton(
                             style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all(Colors.blue)),
+                                    MaterialStateProperty.all(Colors.purple)),
                             // color: Colors.blue,
                             // shape: RoundedRectangleBorder(
                             //     borderRadius: BorderRadius.circular(16.0)),
                             onPressed: () {
                               print(_formKey.currentState);
+
                               if (_formKey.currentState!.validate()) {
                                 save();
                               } else {
@@ -196,39 +184,12 @@ class _SigninState extends State<Signin> {
                               }
                             },
                             child: Text(
-                              "Signin",
+                              "Add/Register New Student",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             )),
                       ),
                     ),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(95, 20, 0, 0),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Not have Account ? ",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => Signup()));
-                              },
-                              child: Text(
-                                "Signup",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ))
                   ],
                 ),
               ),
@@ -237,26 +198,3 @@ class _SigninState extends State<Signin> {
         ));
   }
 }
-
-// class Signin extends StatefulWidget {
-//   Signin({Key key}) : super(key: key);
-
-//   @override
-//   _SigninState createState() => _SigninState();
-// }
-
-// class _SigninState extends State<Signin> {
-//   final _formKey = GlobalKey<FormState>();
-//   Future save() async {
-//     var res = await http.post("http://localhost:8080/signin",
-//         headers: <String, String>{
-//           'Context-Type': 'application/json;charSet=UTF-8'
-//         },
-//         body: <String, String>{
-//           'email': user.email,
-//           'password': user.password
-//         });
-//     print(res.body);
-//     Navigator.push(
-//         context, new MaterialPageRoute(builder: (context) => Dashboard()));
-//   }

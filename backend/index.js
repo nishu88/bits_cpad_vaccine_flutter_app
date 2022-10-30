@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 //mongoose.connect("mongodb://localhost:27017/mydb",{ useNewUrlParser: true, useUnifiedTopology: true })
 
-mongoose.connect("mongodb://localhost:27017/user",{ useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://dbUser:nishu123@cluster0.nvgsydq.mongodb.net/user",{ useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))

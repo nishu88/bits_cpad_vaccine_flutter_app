@@ -10,7 +10,8 @@ import 'package:vaccine_ui/add_vac_drive.dart';
 import 'package:vaccine_ui/get_all_student.dart';
 
 class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+  String coordinator_email;
+  HomePageWidget({required this.coordinator_email});
 
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
@@ -18,9 +19,9 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
+    print(widget.coordinator_email);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: scaffoldKey,
@@ -57,7 +58,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               size: 30,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              print('BACK IconButton pressed ...');
                               Navigator.push(
                                   context,
                                   new MaterialPageRoute(
@@ -183,42 +184,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ],
                   ),
                   Spacer(),
-                  Align(
-                    alignment: AlignmentDirectional(0, 0),
-                    child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => JsonParseDemo()));
-                      },
-                      text: 'Get all Students',
-                      options: FFButtonOptions(
-                        width: 300,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        //borderRadius: BorderRadius.circular(0),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
                   FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      print('Add Student Button pressed ...');
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => AddStudent()));
+                              builder: (context) => AddStudent(
+                                    coordinator_email: widget.coordinator_email,
+                                  )));
                     },
                     text: 'Add Student',
                     options: FFButtonOptions(
@@ -240,9 +214,70 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   Spacer(),
                   FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      print('Update Vac status Button pressed ...');
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => AddStudent(
+                                    coordinator_email: widget.coordinator_email,
+                                  )));
                     },
-                    text: 'Get all Vaccine Drives',
+                    text: 'Update Vaccine status',
+                    options: FFButtonOptions(
+                      width: 300,
+                      height: 40,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      textStyle:
+                          FlutterFlowTheme.of(context).subtitle2.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                              ),
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      //borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  Spacer(),
+                  Align(
+                    alignment: AlignmentDirectional(0, 0),
+                    child: FFButtonWidget(
+                      onPressed: () {
+                        print('Get Vaccination status Button pressed ...');
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => JsonParseDemo()));
+                      },
+                      text: 'Get Vaccination status',
+                      options: FFButtonOptions(
+                        width: 300,
+                        height: 40,
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        //borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  FFButtonWidget(
+                    onPressed: () {
+                      print('Add a new Vaccine Drive Button pressed ...');
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => AddVacDrive()));
+                    },
+                    text: 'Add a new Vaccine Drive',
                     options: FFButtonOptions(
                       width: 300,
                       height: 40,
@@ -262,13 +297,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   Spacer(),
                   FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => AddVacDrive()));
+                      print('Get all Vaccine Drives Button pressed ...');
                     },
-                    text: 'Add a new Vaccine Drive',
+                    text: 'Get all Vaccine Drives',
                     options: FFButtonOptions(
                       width: 300,
                       height: 40,

@@ -46,4 +46,18 @@ router.post('/signin',(req,res)=>{
         }
     })
 })
+
+
+router.get('/get_all_users',(req,res)=>{
+
+    User.find({},(err,user)=>{
+        if(err){
+            console.log(err)
+            res.json(err)
+        }else{
+            res.json(user)   
+        }
+    })
+})
+
 module.exports = router

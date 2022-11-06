@@ -25,15 +25,35 @@ cd frontend
 flutter run
 ```
 
-`Or Open VSCode and`
-```
-Ctrl/Cmd + F5
-```
+`Backend API END points`
 
+POST
+localhost:8080/signin
 
+POST
+localhost:8080/signup
 
-`Url for POST Data`
+GET
+localhost:8080/get_all_users
 
-http://localhost:8080/signin
+POST
+localhost:8080/student/add
 
-http://localhost:8080/signup
+POST
+localhost:8080/student/delete
+
+GET
+localhost:8080/student/report
+
+POST
+localhost:8080/vaccine/update
+
+GET
+localhost:8080/vaccine/get_all_status
+
+POST
+localhost:8080/vaccine_drive/reg_new_vac_drive
+
+GET
+localhost:8080/vaccine_drive/future_vac_drives
+
